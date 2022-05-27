@@ -68,6 +68,8 @@ struct System
         N = sum(group[1] for group in particles)
         D = length(dimensions)
 
+        Hamiltonian = adjust_dimensions(Hamiltonian,D)
+
         new(particles,N,Hamiltonian,dimensions,D)
     end
 
