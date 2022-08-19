@@ -55,14 +55,14 @@ struct System
     function System(particles,Hamiltonian,dimensions=fill((-10.,10.),3))
 
         for bounds in dimensions
-            @assert (bounds[1] ≤ bounds[2]) "The given dimension bounds $(bounds[1]) to $(bounds[2]) are not valid; "*
-                "input tuples in 'dimensions' such that the first number is lower than or equal to the second number."
+            @assert (bounds[1] ≤ bounds[2]) "The given dimension bounds $(bounds[1]) to $(bounds[2]) are not valid; \
+                input tuples in 'dimensions' such that the first number is lower than or equal to the second number."
         end
 
         for term in Hamiltonian , combination in term.groups , i in combination
-            @assert (i ≤ length(particles)) "The given particle group index $i is not valid; "*
-                "input only group indices in the energy terms of 'Hamiltonian' "*
-                "smaller than or equal to the number of particle groups in 'particles'."
+            @assert (i ≤ length(particles)) "The given particle group index $i is not valid; \
+                input only group indices in the energy terms of 'Hamiltonian' \
+                smaller than or equal to the number of particle groups in 'particles'."
         end
 
         N = sum(group[1] for group in particles)

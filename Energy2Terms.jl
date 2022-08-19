@@ -18,8 +18,8 @@ struct CustomEnergy2Term <: Energy2Term
     function CustomEnergy2Term(groups,properties,form)
 
         form_arguments = first(methods(form)).nargs-1 # is the number of arguments in the mathematical form of the energy term.
-        @assert (form_arguments == sum([length(body) for body in properties])) "The declared number of arguments "*
-            "does not match the declared number of properties; input as many elements in 'properties' as there are arguments in 'form'."
+        @assert (form_arguments == sum([length(body) for body in properties])) "The declared number of arguments \
+            does not match the declared number of properties; input as many elements in 'properties' as there are arguments in 'form'."
 
         return new(groups,properties,form)
     end

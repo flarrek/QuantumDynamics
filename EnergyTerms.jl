@@ -16,8 +16,8 @@ within(groups...;bodies=2) = within([groups...];bodies=bodies)
 function between(groups::Vector{Int64};bodies::Int64=2)
     # returns a vector of all combinations from the given particle groups with the given number of bodies.
 
-    @assert (bodies ≤ length(groups)) "The number of involved bodies is larger than the number of given particle groups; "*
-        "input at least as many indices in 'groups' as 'bodies'."
+    @assert (bodies ≤ length(groups)) "The number of involved bodies is larger than the number of given particle groups; \
+        input at least as many indices in 'groups' as 'bodies'."
 
     if (bodies == 1)
         return [[group] for group in groups]
@@ -68,13 +68,13 @@ struct CustomEnergyTerm <: EnergyTerm
 
         bodies = length(properties) # is the number of bodies involved in the energy term.
         for combination in groups
-            @assert (length(combination) == bodies) "The number of involved bodies does not match the given particle group combinations; "*
-                "input tuples in 'groups' whose sizes match the number of tuples in 'properties'."
+            @assert (length(combination) == bodies) "The number of involved bodies does not match the given particle group combinations; \
+                input tuples in 'groups' whose sizes match the number of tuples in 'properties'."
         end
 
         form_arguments = first(methods(form)).nargs-1 # is the number of arguments in the mathematical form of the energy term.
-        @assert (form_arguments == sum([length(body) for body in properties])) "The declared number of arguments "*
-            "does not match the declared number of properties; input as many elements in 'properties' as there are arguments in 'form'."
+        @assert (form_arguments == sum([length(body) for body in properties])) "The declared number of arguments \
+            does not match the declared number of properties; input as many elements in 'properties' as there are arguments in 'form'."
 
         return new(groups,properties,form)
     end
