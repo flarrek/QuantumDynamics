@@ -13,7 +13,7 @@ struct Particle
     spin::Rational      # is the particle's spin number in ħ.
         class::ParticleClass  # is the particle's class, inferred from 'spin'.
 
-    function Particle(mass,charge,spin)
+    function Particle( mass , charge , spin )
 
         @assert (mass ≥ 0.0) "The given mass $mass is not valid; input 0 or a positive number as 'mass'."
 
@@ -29,13 +29,13 @@ struct Particle
     end
 end
 
-Electron() = Particle(1.0,-1,1//2) # returns a Particle encoding an electron.
-Proton() = Particle(1836.15,+1,1//2) # returns a Particle encoding a proton.
-Neutron() = Particle(1838.68,0,1//2) # returns a Particle encoding a neutron.
+Electron( ) = Particle(1.0,-1,1//2) # returns a Particle encoding an electron.
+Proton( ) = Particle(1836.15,+1,1//2) # returns a Particle encoding a proton.
+Neutron( ) = Particle(1838.68,0,1//2) # returns a Particle encoding a neutron.
 
-Electrons(n) = (n,Electron()) # returns a tuple encoding n electrons.
-Protons(n) = (n,Proton()) # returns a tuple encoding n protons.
-Neutrons(n) = (n,Neutron()) # returns a tuple encoding n neutrons.
+Electrons( n ) = (n,Electron()) # returns a tuple encoding n electrons.
+Protons( n ) = (n,Proton()) # returns a tuple encoding n protons.
+Neutrons( n ) = (n,Neutron()) # returns a tuple encoding n neutrons.
 
 
 
@@ -52,7 +52,7 @@ struct System
     dimensions::Vector{NTuple{2,Float64}} # are the dimensions of the system, given in tuples specifying the bounds of each dimension.
         D::Int64 # is the number of dimensions of the system, inferred from 'dimensions'.
 
-    function System(particles,Hamiltonian,dimensions=fill((-10.,10.),3))
+    function System( particles , Hamiltonian , dimensions = fill((-10.,10.),3) )
 
         for bounds in dimensions
             @assert (bounds[1] ≤ bounds[2]) "The given dimension bounds $(bounds[1]) to $(bounds[2]) are not valid; \
@@ -77,8 +77,8 @@ end
 
 
 
-HarmonicOscillator(particles,dimensions=fill((-10.,10.),3);strength=1.0,centre=[0.,0.,0.,]) =
-    System(particles,HarmonicHamiltonian(strength,centre),dimensions)
+HarmonicOscillator( particles , dimensions = fill((-10.,10.),3) ; strength = 1.0 , center = [0.,0.,0.,] ) =
+    System(particles,HarmonicHamiltonian(strength,center),dimensions)
 
 
 

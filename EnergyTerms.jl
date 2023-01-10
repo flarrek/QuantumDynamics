@@ -4,16 +4,16 @@
 
 
 
-function within(groups::Vector{Int64};bodies::Int64=2)
+function within( groups::Vector{Int64} ; bodies::Int64 = 2 )
     # returns a vector of tuples of the given particle group indices with the given number of bodies.
 
     return [fill(group,bodies) for group in groups]
 end
 
-within(groups...;bodies=2) = within([groups...];bodies=bodies)
+within( groups... ; bodies = 2 ) = within([groups...];bodies=bodies)
 
 
-function between(groups::Vector{Int64};bodies::Int64=2)
+function between( groups::Vector{Int64} ; bodies::Int64 = 2 )
     # returns a vector of all combinations from the given particle groups with the given number of bodies.
 
     @assert (bodies ≤ length(groups)) "The number of involved bodies is larger than the number of given particle groups; \
@@ -34,16 +34,16 @@ function between(groups::Vector{Int64};bodies::Int64=2)
     end
 end
 
-between(groups...;bodies=2) = between([groups...];bodies=bodies)
-bethreen(groups) = between(groups;bodies=3)
-bethreen(groups...) = bethreen([groups...])
+between( groups... ; bodies = 2 ) = between([groups...];bodies=bodies)
+bethreen( groups ) = between(groups;bodies=3)
+bethreen( groups... ) = bethreen([groups...])
 
 
 abstract type EnergyTerm end # comprises various possible energy terms of the system Hamiltonian.
 
-adjust_dimensions(term::EnergyTerm,D::Int64) = term
+adjust_dimensions( term::EnergyTerm , D::Int64 ) = term
 
-function adjust_dimensions(Hamiltonian::Vector{Term},D::Int64) where Term <: EnergyTerm
+function adjust_dimensions( Hamiltonian::Vector{Term} , D::Int64 ) where Term <: EnergyTerm
 
     return adjust_dimensions.(Hamiltonian,D)
 end
@@ -64,7 +64,7 @@ struct CustomEnergyTerm <: EnergyTerm
     properties::Vector{Vector{ParticleProperty}} # are the particle properties involved in the energy term, sorted by body.
     form::Function # is the mathematical form of the energy term, declared in the same order as the particle properties above.
 
-    function CustomEnergyTerm(groups,properties,form)
+    function CustomEnergyTerm( groups , properties , form )
 
         bodies = length(properties) # is the number of bodies involved in the energy term.
         for combination in groups
@@ -80,9 +80,9 @@ struct CustomEnergyTerm <: EnergyTerm
     end
 end
 
-CustomEnergyTerm(groups;properties,form) = CustomEnergyTerm(groups,properties,form)
+CustomEnergyTerm( groups ; properties , form ) = CustomEnergyTerm(groups,properties,form)
 
-function CustomEnergyTerm(within_groups::Vector{Int64},between_groups::Vector{Int64},properties,form)
+function CustomEnergyTerm( within_groups::Vector{Int64} , between_groups::Vector{Int64} , properties , form )
     # returns a CustomEnergyTerm which applies within the particle groups given in 'within_groups'
         # and between the particle groups given in 'between_groups'.
 
@@ -92,24 +92,24 @@ function CustomEnergyTerm(within_groups::Vector{Int64},between_groups::Vector{In
     return CustomEnergyTerm(groups,properties,form)
 end
 
-CustomEnergyTerm(within_groups,between_groups;properties,form) = CustomEnergyTerm(within_groups,between_groups,properties,form)
+CustomEnergyTerm( within_groups , between_groups ; properties , form ) = CustomEnergyTerm(within_groups,between_groups,properties,form)
 
-CustomEnergyTerms(properties,form) = CustomEnergyTerm([fill(0,length(properties))],properties,form)
+CustomEnergyTerms( properties , form ) = CustomEnergyTerm([fill(0,length(properties))],properties,form)
     # returns a CustomEnergyTerm applying to all particles in the system. (groups = [[0,...,0]] encodes that the term applies to all particles.)
-CustomEnergyTerms(;properties,form) = CustomEnergyTerms(properties,form)
+CustomEnergyTerms( ; properties , form ) = CustomEnergyTerms(properties,form)
 
 
 
-FreeHamiltonian() = [KineticTerms()]
+FreeHamiltonian( ) = [KineticTerms()]
 
-HarmonicHamiltonian(strength=1.0,center=[0.,0.,0.]) = [KineticTerms(),HarmonicTerms(strength,center)]
-HarmonicHamiltonian(;strength=1.0,center=[0.,0.,0.]) = HarmonicHamiltonian(strength,center)
+HarmonicHamiltonian( strength = 1.0 , center = [0.,0.,0.] ) = [KineticTerms(),HarmonicTerms(strength,center)]
+HarmonicHamiltonian( ; strength = 1.0 , center = [0.,0.,0.] ) = HarmonicHamiltonian(strength,center)
 
-NewtonHamiltonian(strength=1.0,shielding=0.01) = [KineticTerms(),Newton2Terms(strength,shielding)]
-NewtonHamiltonian(;strength=1.0,shielding=0.01) = NewtonHamiltonian(strength,shielding)
+NewtonHamiltonian( strength = 1.0 , shielding = 0.01 ) = [KineticTerms(),Newton2Terms(strength,shielding)]
+NewtonHamiltonian( ; strength = 1.0 , shielding = 0.01 ) = NewtonHamiltonian(strength,shielding)
 
-CoulombHamiltonian(strength=1.0,shielding=0.01) = [KineticTerms(),Coulomb2Terms(strength,shielding)]
-CoulombHamiltonian(strength=1.0,shielding=0.01) = CoulombHamiltonian(strength,shielding)
+CoulombHamiltonian( strength = 1.0 , shielding = 0.01 ) = [KineticTerms(),Coulomb2Terms(strength,shielding)]
+CoulombHamiltonian( strength = 1.0 , shielding = 0.01 ) = CoulombHamiltonian(strength,shielding)
 
 
 
