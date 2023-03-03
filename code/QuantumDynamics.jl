@@ -8,9 +8,9 @@
 struct Particle
     # represents a particle through its three main properties.
 
-    mass::Float64       # is the particle's mass in mₑ.
-    charge::Int64       # is the particle's charge in qₑ.
-    spin::Rational      # is the particle's spin number in ħ.
+    mass::Float64       # is the particle's mass.
+    charge::Int64       # is the particle's charge.
+    spin::Rational      # is the particle's spin number.
         class::ParticleClass  # is the particle's class, inferred from 'spin'.
 
     function Particle( mass , charge , spin )
@@ -28,14 +28,6 @@ struct Particle
         return new(mass,charge,spin,class)
     end
 end
-
-Electron( ) = Particle(1.0,-1,1//2) # returns a Particle encoding an electron.
-Proton( ) = Particle(1836.15,+1,1//2) # returns a Particle encoding a proton.
-Neutron( ) = Particle(1838.68,0,1//2) # returns a Particle encoding a neutron.
-
-Electrons( n ) = (n,Electron()) # returns a tuple encoding n electrons.
-Protons( n ) = (n,Proton()) # returns a tuple encoding n protons.
-Neutrons( n ) = (n,Neutron()) # returns a tuple encoding n neutrons.
 
 
 
