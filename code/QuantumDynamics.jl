@@ -45,7 +45,7 @@ struct System
     dimensions::Vector{NTuple{2,Float64}} # are the dimensions of the system, given in tuples specifying the bounds of each dimension.
         D::Int64 # is the number of dimensions of the system, inferred from 'dimensions'.
 
-    function System( particles , Hamiltonian , dimensions = fill((-10.,10.),3) )
+    function System( particles , Hamiltonian , dimensions = fill((-1.,1.),3) )
 
         for bounds in dimensions
             @assert (bounds[1] ≤ bounds[2]) "The given dimension bounds $(bounds[1]) to $(bounds[2]) are not valid; \
@@ -70,7 +70,7 @@ end
 
 
 
-HarmonicOscillator( particles , dimensions = fill((-10.,10.),3) ; strength = 1.0 , center = [0.,0.,0.,] ) =
+HarmonicOscillator( particles , dimensions = fill((-1.,1.),3) ; strength = 1.0 , center = [0.,0.,0.,] ) =
     System(particles,HarmonicHamiltonian(strength,center),dimensions)
 
 
