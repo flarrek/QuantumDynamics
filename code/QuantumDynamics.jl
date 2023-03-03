@@ -17,6 +17,7 @@ struct Particle
 
         @assert (mass ≥ 0.0) "The given mass $mass is not valid; input 0 or a positive number as 'mass'."
 
+        @assert (spin ≥ 0) "The given spin number $spin is not valid; input 0 or a positive multiple of 1/2 as 'spin'."
         @assert (spin%(1//2) == 0) "The given spin number $spin is not valid; input 0 or a positive multiple of 1/2 as 'spin'."
 
         if (spin%1 == 0)
